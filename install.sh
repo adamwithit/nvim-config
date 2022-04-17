@@ -1,4 +1,19 @@
 #!/usr/bin/env bash
+# Prerequisite
+# neovim 6.1+
+#   download nvim.appimage from https://github.com/neovim/neovim/releases/tag/v0.6.1
+#   sudo mv nvim.appimage /usr/local/bin/nvim
+#   sudo chmod +x /usr/local/bin/nvim
+# python2 with pynvim (for auto-install lua packages within nvim)
+#   python3 -m pip install --user --upgrade pynvim
+#   sudo apt-get install python
+# ripgrep for live fuzzy searching
+#   sudo apt-get install ripgrep
+# nodejs 16 & eslint
+#   sudo apt update
+#   curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
+#   sudo apt install -y nodejs
+#   sudo npm install -g eslint
 
 if nvim --version | head -n1 | grep -vq 0.7; then
   echo "expected nvim 0.7, aborting..."
@@ -36,6 +51,18 @@ rm -rf \
   ~/.config/nvim/UltiSnips \
   ~/.tmux.conf \
   ~/.config/kitty/kitty.conf
+
+python3 -m pip install --user --upgrade pynvim
+if  [[ "$OSTYPE" == "darwin"* ]]; then
+  brew install the_silver_searcher prettier black stylua wget rigrep packer luarocks flake8 nodejs eslint python2
+  brew tap homebrew/cask-fonts
+  brew install --cask font-hack-nerd-font
+        #Mac OSX
+else
+  sudo apt-get install silversearcher-ag prettier black stylua
+  mkdir -p ~/.local/share/fonts
+  cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
+fi
 
 ln -s `pwd`/vimrc.lua ~/.config/nvim/init.lua
 ln -s `pwd`/nvim.d ~/.config/nvim/lua
