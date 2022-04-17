@@ -35,6 +35,10 @@ packer.init {
       return require("packer.util").float { border = "rounded" }
     end,
   },
+  luarocks = {
+    python_cmd = 'python3' -- Set the python command to use for running hererocks
+  },
+  log = { level = 'debug' },
 }
 
 -- " vim features that extracted out as a separate file, but not grouped as a

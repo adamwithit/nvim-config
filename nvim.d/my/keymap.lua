@@ -46,7 +46,7 @@ map("n", "<c-f>", "<cmd>Telescope grep_string<cr>", opts)
 map("n", "sf", "gcc", {})
 map("n", "<c-t>", "<cmd>NvimTreeToggle<cr>", opts)
 map("n", "<leader>t", "<cmd>TSPlaygroundToggle<cr>", opts)
-cancel("n", {">>", "<<", ":", "/", "?", "Q", "qq", "<bs>", "<del>", "<cr>", "<up>", "<down>", "<left>", "<right>"})
+-- cancel("n", {">>", "<<", ":", "/", "?", "Q", "qq", "<bs>", "<del>", "<cr>", "<up>", "<down>", "<left>", "<right>"})
 -- map("n", "<C-h>", "<C-w>h", opts)    -- switch window
 -- map("n", "<C-l>", "<C-w>l", opts)
 
