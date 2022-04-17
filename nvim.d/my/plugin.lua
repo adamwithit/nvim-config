@@ -35,7 +35,7 @@ packer.init {
     end,
   },
   luarocks = {
-    python_cmd = 'python3.6' -- Set the python command to use for running hererocks
+    python_cmd = 'python3' -- Set the python command to use for running hererocks
   },
   log = { level = 'debug' },
 }
