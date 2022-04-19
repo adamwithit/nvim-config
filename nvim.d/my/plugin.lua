@@ -35,7 +35,7 @@ packer.init {
     end,
   },
   luarocks = {
-    python_cmd = 'python3' -- Set the python command to use for running hererocks
+    python_cmd = 'python3.6' -- Set the python command to use for running hererocks
   },
   log = { level = 'debug' },
 }
@@ -169,8 +169,7 @@ packer.startup(function(use, use_rocks)
 
 
   -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
-  if PACKER_BOOTSTRAP then
+  -- Put this at the end after all plugins if PACKER_BOOTSTRAP then
     require("packer").sync()
   end
 end)
