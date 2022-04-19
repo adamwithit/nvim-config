@@ -9,7 +9,7 @@ _G.ReloadConfig = function()
       package.loaded[name] = nil
     end
   end
-  dofile("/home/loki/.config/nvim/init.lua")
+  dofile("~/.config/nvim/init.lua")
 end
 vim.cmd [[command! ReloadConfig lua ReloadConfig()]]
 
@@ -26,6 +26,7 @@ require "my.git"
 require "my.explorer"
 require "my.statusline"
 require "my.tabline"
+require "my.toggleterm"
 vim.cmd "source ~/.config/nvim/lua/autocmd.vim"
 vim.cmd "source ~/.config/nvim/lua/tmux.vim"
 require "my.whichkey"
