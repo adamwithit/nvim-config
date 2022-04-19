@@ -29,8 +29,8 @@ au FileType zsh vnoremap <silent> <m-r> <esc>
 
 au FileType python noremap <silent> <m-r> :w ! python<cr>
 au FileType sh noremap <silent> <m-r> :w ! sh<cr>
-au! BufNewFile,BufRead *.ln set filetype=lokinote
-au! FileType lokinote so ~/loki/env/vim/lokinote.vim
+"au! BufNewFile,BufRead *.ln set filetype=lokinote
+"au! FileType lokinote so ~/loki/env/vim/lokinote.vim
 
 au VimEnter * call LoadProjectVimRC()
 function! LoadProjectVimRC()

@@ -36,7 +36,7 @@ packer.init {
     end,
   },
   luarocks = {
-    python_cmd = 'python3' -- Set the python command to use for running hererocks
+    python_cmd = 'python3.6' -- Set the python command to use for running hererocks
   },
   log = { level = 'debug' },
 }
@@ -62,6 +62,7 @@ packer.startup(function(use, use_rocks)
   use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
   use 'antoinemadec/FixCursorHold.nvim'
   use "tpope/vim-repeat"
+  use "akinsho/toggleterm.nvim"
 
   -- which key
   use "folke/which-key.nvim"
@@ -107,8 +108,12 @@ packer.startup(function(use, use_rocks)
   use 'JoosepAlviste/nvim-ts-context-commentstring'
 
   -- Git
-  use "lewis6991/gitsigns.nvim"
-
+  use {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup()
+    end
+  }
   -- Explorer
   use 'kyazdani42/nvim-web-devicons'
   use 'kyazdani42/nvim-tree.lua'
@@ -127,8 +132,14 @@ packer.startup(function(use, use_rocks)
   vim.cmd [[let g:VM_maps['Exit'] = '<C-c>']]
   -- use "mg979/vim-visual-multi"
   use "bronson/vim-trailing-whitespace"    -- try if this can be replaced by lsp auto format
-  use "numToStr/Comment.nvim"
-  use "tpope/vim-surround"   -- manage surrounding characters like (abc) -> [abc] : cs([
+  use "tpope/vim-surround"
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
+    end
+  }
+  -- manage surrounding characters like (abc) -> [abc] : cs([
   -- crs: snake_case
   -- crm: MixedCase
   -- crc: camelCase
