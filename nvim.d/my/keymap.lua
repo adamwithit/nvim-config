@@ -73,4 +73,5 @@ map("c", "%%", "<c-r>=expand('%:h').'/'<cr>", opts) -- expand current path
 map("c", "%$", "<c-r>=expand('%').'/'<cr>", opts) -- expand current path
 cancel("c", {"<esc>", "<del>"})
 
+
 vim.cmd "source ~/.config/nvim/lua/keymap.vim"
