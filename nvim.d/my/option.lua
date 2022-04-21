@@ -4,9 +4,9 @@ local o = vim.opt
 o.backup = false
 o.writebackup = false
 o.swapfile = false
-o.directory = "~/.config/nvim/tmp"
+o.directory = "/home/don/.config/nvim/tmp"
 o.undofile = true
-o.undodir = "~/.config/nvim/tmp"
+o.undodir = "/home/don/.config/nvim/tmp"
 o.confirm = true
 
 o.ruler = true
