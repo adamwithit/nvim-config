@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # set -x
 
-<<<<<<< HEAD
 echo "Projects with changes:"
 echo
 
@@ -17,7 +16,6 @@ for base in `list-projects`; do
     fi
   fi
 done
-=======
 projs="$(fdfind -H "^project.vim" $HOME | sed -e 's|/\.devbase.*||' -e 's|/project.vim||' -e "s|$HOME/||")"
 
 for base in $projs; do
@@ -30,4 +28,3 @@ done
 
 echo
 echo "- done scanning, C-C to close -"
->>>>>>> add tmux.conf
