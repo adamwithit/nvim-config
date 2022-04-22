@@ -14,7 +14,14 @@
 
 input="$1"
 
+<<<<<<< HEAD
 projs=`list-projects`
+=======
+if [[ ! -f ~/.open-project.cache ]]; then
+  fd -H "^project.vim" $HOME | sed -e 's|/\.devbase.*||' -e 's|/project.vim||' -e "s|$HOME/||" > ~/.open-project.cache
+fi
+projs="$(cat ~/.open-project.cache)"
+>>>>>>> add tmux.conf
 
 if [[ "$input" = "" ]]; then
   picked="$(echo "$projs" | sort -r | fzf-tmux-popup -p -w 50 -h 50% -m)"
@@ -29,7 +36,11 @@ fi
 projName="$(echo "$picked" | cut -d'/' -f2)"
 
 if ! tmux list-windows -F "#W" | grep -q "^${projName}$"; then
+<<<<<<< HEAD
   cmd="cd $HOME/$picked ; zsh -ic '[ -f .envrc ] && source .envrc; TERM=screen-256color; rm -f /tmp/nvim/$projName; nvim'"
+=======
+  cmd="cd $HOME/$picked ; zsh -ic '[ -f .envrc ] && source .envrc; TERM=screen-256color nvim'"
+>>>>>>> add tmux.conf
   tmux new-window -n $projName "$cmd"
 fi
 
