@@ -26,9 +26,11 @@
 # fc-list :mono | awk -F: '{print $2}' | sort -u
 # change gnome-terminal profile to use mplus (size = 17, make sure the font looks taller)
 mkdir ~/.config/nvim
+rm ~/tmux.conf
 ln -s `pwd`/vimrc.lua ~/.config/nvim/init.lua
 ln -s `pwd`/nvim.d ~/.config/nvim/lua
 ln -s `pwd`/UltiSnips ~/.config/nvim/UltiSnips
+ln -s `pwd`/tmux.conf ~/tmux.comf
 if  [[ "$OSTYPE" == "darwin"* ]]; then
   brew install the_silver_searcher  prettier black stylua wget rigrep packer luarocks flake8 nodejs eslint python2
   brew tap homebrew/cask-fonts
@@ -37,7 +39,9 @@ if  [[ "$OSTYPE" == "darwin"* ]]; then
         #Mac OSX
 else
   sudo npm install --save-dev --save-exact prettier black stylua
-  sudo apt-get install silversearcher-ag python2 python3-pip
+  sudo apt-get install silversearcher-ag python2 python3-pip fd-find fzf
+  curl https://sh.rustup.rs -sSf | sh
+
   mkdir -p ~/.local/share/fonts
   cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
   python3 -m pip install --user --upgrade pynvim
