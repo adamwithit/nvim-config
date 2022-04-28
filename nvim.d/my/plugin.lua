@@ -34,10 +34,6 @@ packer.init {
       return require("packer.util").float { border = "rounded" }
     end,
   },
-  luarocks = {
-    python_cmd = 'python3.6' -- Set the python command to use for running hererocks
-  },
-  log = { level = 'debug' },
 }
 
 -- " vim features that extracted out as a separate file, but not grouped as a
@@ -64,7 +60,6 @@ packer.startup(function(use, use_rocks)
   use "triglav/vim-visual-increment"    -- increase numbers on multiple lines at once
   use "tomtom/tlib_vim"                 -- provided string#Strip, used in the lokinote bullet style switching shortcut
   use "rcarriga/nvim-notify"
-  use "akinsho/toggleterm.nvim"
 
   -- which key
   use "folke/which-key.nvim"
@@ -111,12 +106,8 @@ packer.startup(function(use, use_rocks)
   use 'JoosepAlviste/nvim-ts-context-commentstring'
 
   -- Git
-  use {
-    'lewis6991/gitsigns.nvim',
-    config = function()
-      require('gitsigns').setup()
-    end
-  }
+  use "lewis6991/gitsigns.nvim"
+
   -- Explorer
   use 'kyazdani42/nvim-web-devicons'
   use 'kyazdani42/nvim-tree.lua'
@@ -135,14 +126,8 @@ packer.startup(function(use, use_rocks)
   vim.cmd [[let g:VM_maps['Exit'] = '<C-c>']]
   -- use "mg979/vim-visual-multi"
   use "bronson/vim-trailing-whitespace"    -- try if this can be replaced by lsp auto format
-  use "tpope/vim-surround"
-  use {
-    'numToStr/Comment.nvim',
-    config = function()
-      require('Comment').setup()
-    end
-  }
-  -- manage surrounding characters like (abc) -> [abc] : cs([
+  use "numToStr/Comment.nvim"
+  use "tpope/vim-surround"   -- manage surrounding characters like (abc) -> [abc] : cs([
   -- crs: snake_case
   -- crm: MixedCase
   -- crc: camelCase
@@ -169,7 +154,8 @@ packer.startup(function(use, use_rocks)
 
 
   -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins if PACKER_BOOTSTRAP then
+  -- Put this at the end after all plugins
+  if PACKER_BOOTSTRAP then
     require("packer").sync()
   end
 end)
