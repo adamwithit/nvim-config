@@ -25,6 +25,36 @@
 # fc-cache -fv
 # fc-list :mono | awk -F: '{print $2}' | sort -u
 # change gnome-terminal profile to use mplus (size = 17, make sure the font looks taller)
+
+if nvim --version | head -n1 | grep -vq 0.7; then
+  echo "expected nvim 0.7, aborting..."
+  exit 1
+fi
+
+if pip3 list | grep pynvim | grep -vq pynvim; then
+  echo "expected pynvim, aborting..."
+  exit 1
+fi
+
+if tmux -V | grep -vq 3.4; then
+  echo "expected tmux 3.2, aborting..."
+  exit 1
+fi
+
+if ! which rg > /dev/null; then
+  echo "rg not found, aborting..."
+  exit 1
+fi
+
+if ! which fdfind > /dev/null; then
+  echo "fdfind not found, aborting..."
+  exit 1
+fi
+
+if ! which fzf > /dev/null; then
+  echo "fzf not found, aborting..."
+  exit 1
+fi
 mkdir ~/.config/nvim
 rm ~/tmux.conf
 ln -s `pwd`/vimrc.lua ~/.config/nvim/init.lua
@@ -32,17 +62,24 @@ ln -s `pwd`/nvim.d ~/.config/nvim/lua
 ln -s `pwd`/UltiSnips ~/.config/nvim/UltiSnips
 ln -s `pwd`/tmux.conf ~/tmux.comf
 if  [[ "$OSTYPE" == "darwin"* ]]; then
-  brew install the_silver_searcher  prettier black stylua wget rigrep packer luarocks flake8 nodejs eslint python2
+  brew install the_silver_searcher  prettier black stylua wget rigrep packer luarocks flake8 nodejs eslint python2 git any-key
   brew tap homebrew/cask-fonts
   brew install --cask font-hack-nerd-font
   python3 -m pip install --user --upgrade pynvim
         #Mac OSX
 else
-  sudo npm install --save-dev --save-exact prettier black stylua
-  sudo apt-get install silversearcher-ag python2 python3-pip fd-find fzf
-  curl https://sh.rustup.rs -sSf | sh
+  sudo npm install --save-dev --save-exact prettier black stylua git any-key
+  sudo apt-get install silversearcher-ag python2 python3-pip
 
   mkdir -p ~/.local/share/fonts
   cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
   python3 -m pip install --user --upgrade pynvim
 fi
+if ! which open-project 1>/dev/null 2>&1; then
+  sourceLine="export PATH=\"\$PATH:`pwd`/bin\""
+  [ -f ~/.bashrc ] && echo $sourceLine >> ~/.bashrc
+  [ -f ~/.zshrc ] && echo $sourceLine >> ~/.zshrc
+  echo "RC files Done"
+fi
+
+tmux source-file ~/.tmux.conf

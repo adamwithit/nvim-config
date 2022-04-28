@@ -152,6 +152,7 @@ function! MoveFile()
   let fullpath = expand('%')
   let newpath = input('Move file to: ', fullpath)
   exe "! mv " . fullpath . " " . newpath
+  exe "bwipeout"
   exe "edit " . newpath
   redraw!
 endfunction
@@ -169,4 +170,8 @@ function! CloneSelection()
   let lines = nend - nstart
   exe "normal " . nend . "Go"
   exe "normal pV" . lines . "j"
+endfunction
+
+function! TmuxPopup(cmd)
+  call system("tmux popup -E \"zsh -c 'cd `pwd`; pwd; [ -f .envrc ] && source .envrc;" . a:cmd . "'\"")
 endfunction
