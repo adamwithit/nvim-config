@@ -20,7 +20,7 @@ if [[ ! -f ~/.open-project.cache ]]; then
 fi
 projs="$(cat ~/.open-project.cache)"
 if [[ ! -f ~/.open-project.cache ]]; then
-  fd -H "^project.vim" $HOME | sed -e 's|/\.devbase.*||' -e 's|/project.vim||' -e "s|$HOME/||" > ~/.open-project.cache
+  fdfind -H "^project.vim" $HOME | sed -e 's|/\.devbase.*||' -e 's|/project.vim||' -e "s|$HOME/||" > ~/.open-project.cache
 fi
 projs="$(cat ~/.open-project.cache)"
 
