@@ -36,7 +36,7 @@ if pip3 list | grep pynvim | grep -vq pynvim; then
   exit 1
 fi
 
-if tmux -V | grep -vq 3.4; then
+if tmux -V | grep "([0-9]{1,}\.)+[0-9]{1,}" > 3.2; then
   echo "expected tmux 3.2, aborting..."
   exit 1
 fi
