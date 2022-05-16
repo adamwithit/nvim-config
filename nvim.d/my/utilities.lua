@@ -1,3 +1,13 @@
+
+local status_ok, notify = pcall(require, "notify")
+if status_ok then
+  notify.setup({
+    timeout = 1000,
+    -- render = "minimal",
+  })
+  vim.notify = notify
+end
+
 _G.run_cmd = function(cmd)
   local handle = io.popen(cmd)
   local output = handle:read("*a")
@@ -33,6 +43,13 @@ _G.exec_in_split = function(cmd, tmux_arg)
   run_cmd(cmd3)
 end
 
+_G.exec_in_popup = function(cmd, tmux_arg)
+  local c = string.gsub(cmd, '"', '\\"')
+  local cmd2 = "tmux popup -E " .. (tmux_arg or "") ..
+    " \"zsh -c 'cd `pwd`; pwd; [ -f .envrc ] && source .envrc;" .. c .. "'\""
+  run_cmd(cmd2)
+end
+
 _G.ReloadConfig = function()
   for name,_ in pairs(package.loaded) do
     if name:match('^my') then
@@ -42,3 +59,32 @@ _G.ReloadConfig = function()
   dofile("/home/loki/.config/nvim/init.lua")
 end
 vim.cmd [[command! ReloadConfig lua ReloadConfig()]]
+
+_G.deprecate = function(alt)
+  return function()
+    vim.notify("Use " .. alt .. " instead", "error", {
+      title = "Shortcut deprecated",
+    })
+  end
+end
+
+_G.deprecate_keymap = function(map, key, alt)
+  vim.keymap.set(map, key, deprecate(alt))
+end
+
+-- project specific key mappings with which-key
+_G.which_key_map = function(prefix, mappings)
+  local wkok, which_key = pcall(require, "which-key")
+  if not wkok then
+    print "which-key.nvim is required but not found"
+    return
+  end
+  which_key.register(mappings, {
+    mode = "n",
+    prefix = prefix,
+    buffer = nil,
+    silent = true,
+    noremap = true,
+    nowait = true,
+  })
+end

@@ -1,0 +1,1 @@
+/home/don/nvim-config/nvim.d
