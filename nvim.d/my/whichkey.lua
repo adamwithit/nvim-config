@@ -112,10 +112,10 @@ local mappings = {
   l = {
     name = "LSP",
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-    d = {
-      "<cmd>Telescope lsp_document_diagnostics<cr>",
-      "Document Diagnostics",
-    },
+    -- d = {
+    --   "<cmd>Telescope lsp_document_diagnostics<cr>",
+    --   "Document Diagnostics",
+    -- },
     w = {
       "<cmd>Telescope lsp_workspace_diagnostics<cr>",
       "Workspace Diagnostics",
@@ -123,13 +123,23 @@ local mappings = {
     f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
     i = { "<cmd>LspInfo<cr>", "Info" },
     I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
-    j = {
-      "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",
-      "Next Diagnostic",
+    -- use <c-h> and <c-l> instead
+    -- j = {
+    --   "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",
+    --   "Next Diagnostic",
+    -- },
+    -- k = {
+    --   "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",
+    --   "Prev Diagnostic",
+    -- },
+    d = {
+      "<cmd>lua vim.lsp.buf.hover()<cr>",
+      "Hover",
     },
-    k = {
-      "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",
-      "Prev Diagnostic",
+    h = {
+      -- "<cmd>lua vim.lsp.buf.hover()<cr>",
+      "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>",
+      "Show current line diagnostic",
     },
     l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
     q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", "Quickfix" },

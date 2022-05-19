@@ -1,6 +1,6 @@
 local opts = { noremap = true, silent = true }
 -- local term_opts = { silent = true }
-local map = vim.api.nvim_set_keymap
+local map = vim.keymap.set
 local cancel = function(tbl, keys)
   for i, k in pairs(keys) do
     map(tbl, k, "<nop>", opts)
@@ -11,8 +11,11 @@ cancel("", {"<space>"})
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+local send = require("my.send")
+
 -- Normal
 map("n", "q1", ":qa<cr>", opts)
+map("n", "qd", ":qa<cr>", opts)
 map("n", "qw", ":w<cr>", opts)
 map("n", "<c-c>", ":nohlsearch<cr>:redraw!<cr>", opts)
 map("n", "<m-n>", ":set nu! rnu!<cr>", opts)
@@ -36,8 +39,11 @@ map("n", "<m-l>", ":BufferLineCycleNext<cr>", opts)
 map("n", "<m-b>", "<cmd>Telescope buffers theme=dropdown<cr>", opts)
 map("n", "qf", "<cmd>bwipeout<cr>", opts)
 map("n", "<leader>cl", ":let @+ = expand('%:p')<cr>", opts)     -- copy current file path to clipboard
-map("n", "ss", 'yy:call system("paste_to_next_tmux_pane")<cr>', opts)
-map("n", "sb", ':call system("paste_to_next_tmux_pane last-cmd")<cr>', opts)
+
+map("n", "ss", send.send_current_line, opts)
+map("n", "sb", send.send_last_line, opts)
+map("n", "sc", send.send_current_cell, opts)
+
 map("n", "gV", '`[v`]', opts)
 map("n", "<leader>ps", ':PackerSync<cr>', opts)
 map("n", "hl", "<cmd>Telescope find_files<cr>", opts)
@@ -58,14 +64,17 @@ map("i", "<c-n>", "<Cmd>lua require('cmp').complete()<CR>", opts)
 --cancel("i", {"<esc>", "<del>", "<cr>", "<up>", "<down>", "<left>", "<right>"})
 
 -- Visual
-map("v", "<c-j>", "<gv", opts)
-map("v", "<c-k>", ">gv", opts)
-map("v", "hu", ":", {noremap = true})
-map("v", "p", '"_dP', opts)
-map("v", "ss", 'y:call system("paste_to_next_tmux_pane")<cr>', opts)
-map("v", "sf", "gc", {})
-map("v", "<c-f>", "y<esc><cmd>Telescope live_grep default_text=<c-r>0<cr>", opts)
-cancel("v", {">", "<", "<esc>", ":"})
+map("x", "<c-j>", "<gv", opts)
+map("x", "<c-k>", ">gv", opts)
+map("x", "hu", ":")
+map("x", "p", '"_dP', opts)
+map("x", "s", send.send_highlighted_lines, opts)
+map("x", "sf", "<Plug>(comment_toggle_linewise_visual)", opts)
+map("x", "<c-f>", function()
+  vim.cmd([[normal "ay]])
+  vim.cmd("Telescope live_grep default_text=" .. vim.fn.getreg("a"))
+end)
+cancel("x", {">", "<", "<esc>", ":"})
 
 -- Command
 map("c", "jk", "<c-c>", opts)
