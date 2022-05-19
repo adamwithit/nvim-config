@@ -175,3 +175,7 @@ endfunction
 function! TmuxPopup(cmd)
   call system("tmux popup -E \"zsh -c 'cd `pwd`; pwd; [ -f .envrc ] && source .envrc;" . a:cmd . "'\"")
 endfunction
+
+:nnoremap <Leader>qq ciw""<Esc>P
+:nnoremap <Leader>q' ciw''<Esc>P
+:nnoremap <Leader>Q daW"=substitute(@@,"'\\\|\"","","g")<CR>P
