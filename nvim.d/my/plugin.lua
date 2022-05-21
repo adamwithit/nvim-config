@@ -60,6 +60,7 @@ packer.startup(function(use, use_rocks)
   use "triglav/vim-visual-increment"    -- increase numbers on multiple lines at once
   use "tomtom/tlib_vim"                 -- provided string#Strip, used in the lokinote bullet style switching shortcut
   use "rcarriga/nvim-notify"
+  use "akinsho/toggleterm.nvim"
 
   -- which key
   use "folke/which-key.nvim"
