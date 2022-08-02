@@ -5,6 +5,9 @@ capabilitiesWithoutFomatting.textDocument.range_formatting = false
 
 local opts = {
   settings = {
+    diagnostics = {
+      globals = {'cy'}
+    },
     documentFormatting = false
   },
   capabilities = capabilitiesWithoutFomatting,
