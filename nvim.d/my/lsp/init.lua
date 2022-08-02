@@ -15,8 +15,8 @@ local on_attach = function(client, bufnr)
   local map = vim.api.nvim_buf_set_keymap
   map(bufnr, "n", "<c-h>", '<cmd>lua vim.diagnostic.goto_prev({ float = false })<cr>', opts)
   map(bufnr, "n", "<c-l>", '<cmd>lua vim.diagnostic.goto_next({ float = false })<cr>', opts)
-  map(bufnr, "n", "<c-[>", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  map(bufnr, "n", "<c-]>", "<cmd>tab split | lua vim.lsp.buf.definition()<CR>", opts)
+  map(bufnr, "n", "<c-m-]>", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+  map(bufnr, "n", "<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
   map(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
   map(bufnr, "n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 end
@@ -34,6 +34,20 @@ lsp_installer.on_server_ready(function(server)
   if (server.name == "grammarly") then
     opts.filetypes = { "markdown", "rst", "html", "lokinote" }
   end
+
+  -- if (server.name == "sqls") then
+  --   opts.settings = {
+  --     sqls = {
+  --       lowercaseKeywords = false,
+  --       connections = {
+  --         {
+  --           driver = 'postgresql',
+  --           dataSourceName = 'host=127.0.0.1 port=15432 user=farmweb password=farmweb321 dbname=farmweb',
+  --         }
+  --       }
+  --     }
+  --   }
+  -- end
 
   if server.name == "ltex" then
     opts.filetypes = { "lokinote", "bib", "gitcommit", "markdown", "org", "plaintex", "rst", "rnoweb", "tex" }

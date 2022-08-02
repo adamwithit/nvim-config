@@ -51,15 +51,25 @@ Environment
     download and extract tmux-3.2a.tar.gz at https://github.com/tmux/tmux/releases
     ./configure && make && sudo make install
 
-  icons by fonts
-    access https://www.nerdfonts.com/font-downloads
-    download and unzip the one you like (I use the MPlus Nerd Font)
-    mv 'M+ 1mn light Nerd Font Complete Mono.ttf' ~/.local/share/fonts
+  wezterm with ligatures support
+    download and install from the deb file
+      https://wezfurlong.org/wezterm/install/linux.html
+
+  terminal font with ligatures support
+    https://github.com/belluzj/fantasque-sans/releases/latest
+    download FantasqueSansMono-LargeLineHeight-NoLoopK.tar.gz
+    untar and move all files inside OTF/ into ~/.local/share/fonts
     fc-cache -fv
-    change your terminal emulator font setting
-      I use gnome-terminal, with font size 17
+
+  other fonts with icons
+    https://www.nerdfonts.com/font-downloads
+    download and unzip the one you like e.g. MPlus Nerd Font
+    may check out a good paid font: https://www.myfonts.com/fonts/tabular-type-foundry/codelia/
 
 Optional for various LSP servers
+  disable gnome animation
+    gsettings set org.gnome.desktop.interface enable-animations false
+
   nodejs 16 & eslint
     sudo apt update
     curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
