@@ -8,13 +8,24 @@ if status_ok then
 end
 
 _G.run_cmd = function(cmd)
-  local handle = io.popen(cmd)
+  local handle = io.popen(cmd .. " 2>&1")
   local output = handle:read("*a")
   handle:close()
   return output
 end
 
-_G.console_ctl = function(cmd)
+_G.console_pane_flag = "-b"
+_G.console_pane_flag_toggle = function()
+  if _G.console_pane_flag == "-b" then
+    _G.console_pane_flag = ""
+    print "console is on right"
+  else
+    _G.console_pane_flag = "-b"
+    print "console is on left"
+  end
+end
+
+_G.console_ctl = function(cmd, size)
   return function()
     local left_pane = run_cmd([[tmux list-panes -F '#{pane_id} #{pane_start_command}' | grep leftpane]])
     local paneId = left_pane:match("([^ ]+)") or ""
@@ -24,13 +35,14 @@ _G.console_ctl = function(cmd)
     end
     local actual_cmd = "zsh -c 'echo leftpane > /dev/null && " .. cmd .. "'"
     local subed = string.gsub(cmd, '"', '\\"')
+    local percentage = size and "-p" .. size or "-p32"
 
     if string.find(left_pane, subed, 0, true) then
       kill_pane()
     elseif paneId == "" then
-      run_cmd('tmux splitw -dhb -p32 -- ' .. actual_cmd)
+      run_cmd('tmux splitw -dh ' .. _G.console_pane_flag .. ' ' .. percentage .. ' -- ' .. actual_cmd)
     else
-      run_cmd('tmux splitw -dvb -t "' .. paneId .. '" -- ' .. actual_cmd)
+      run_cmd('tmux splitw -dv ' .. _G.console_pane_flag .. ' -t "' .. paneId .. '" -- ' .. actual_cmd)
       kill_pane()
     end
   end
@@ -38,7 +50,7 @@ end
 
 _G.exec_in_split = function(cmd, tmux_arg)
   local cmd2 = "echo " .. cmd .. "; " .. cmd
-  local cmd3 = "tmux splitw " .. (tmux_arg or "") .. " \"zsh -c '" .. cmd2 .. "'\""
+  local cmd3 = "tmux splitw " .. (tmux_arg or "") .. " \"zsh -c '[ -f .envrc ] && source .envrc;" .. cmd2 .. "'\""
   run_cmd(cmd3)
 end
 

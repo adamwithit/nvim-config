@@ -50,7 +50,9 @@ packer.init {
 
 -- Install your plugins here
 packer.startup(function(use, use_rocks)
+  -- if not auto-installed, install with command      :PackerRocks install f-strings
   use_rocks 'lua-cjson'
+  use_rocks 'f-strings'
 
   use "wbthomason/packer.nvim"          -- Have packer manage itself
   use "nvim-lua/popup.nvim"             -- An implementation of the Popup API from vim in Neovim
@@ -68,6 +70,7 @@ packer.startup(function(use, use_rocks)
   use 'Mofiqul/vscode.nvim'
   use 'kvrohit/substrata.nvim'
   use 'marko-cerovac/material.nvim'
+  use 'norcalli/nvim-colorizer.lua'
 
   use {'yamatsum/nvim-cursorline', config = function()
     vim.g.cursorword_highlight = false
@@ -77,6 +80,7 @@ packer.startup(function(use, use_rocks)
   use 'Xuyuanp/scrollbar.nvim'
 
   -- Completion
+  use "L3MON4D3/LuaSnip"
   use "hrsh7th/nvim-cmp"
   -- use {"hrsh7th/nvim-cmp", commit = "dbc72290295cfc63075dab9ea635260d2b72f2e5"}
   use "hrsh7th/cmp-buffer"
@@ -85,8 +89,7 @@ packer.startup(function(use, use_rocks)
   use "hrsh7th/cmp-nvim-lsp"
   use "hrsh7th/cmp-nvim-lua"
   use "lukas-reineke/cmp-rg"
-  use "SirVer/ultisnips"
-  use "quangnguyen30192/cmp-nvim-ultisnips"
+  use "saadparwaiz1/cmp_luasnip"
 
   -- LSP
   use "neovim/nvim-lspconfig"
@@ -163,11 +166,14 @@ packer.startup(function(use, use_rocks)
   -- noremap <Leader>t# :Tabularize /#<cr>
   -- noremap <Leader>t> :Tabularize /=><cr>
 
-  --[[ -- flutter ]]
-  --[[ use 'natebosch/vim-lsc' ]]
-  --[[ use 'natebosch/vim-lsc-dart' ]]
-  --[[ use 'dart-lang/dart-vim-plugin' ]]
+  use {'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim'}
 
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = "cd app && npm install",
+    setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
+    ft = { "markdown" },
+  })
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

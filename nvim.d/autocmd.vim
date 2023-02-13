@@ -27,6 +27,8 @@ au FileType zsh vnoremap <silent> <m-r> <esc>
   \ :'<,'>w ! zsh-run<cr>
   \ :r /tmp/mytmp.zsh.out<cr>
 
+au BufNewFile,BufRead *.uplugin set ft=json
+
 au FileType python noremap <silent> <m-r> :w ! python<cr>
 au FileType sh noremap <silent> <m-r> :w ! sh<cr>
 "au! BufNewFile,BufRead *.ln set filetype=lokinote
@@ -71,11 +73,6 @@ function! TabdoChecktime()
   tabdo checktime
   set confirm
 endfunction
-
-augroup lokinote
-  au! BufNewFile,BufRead *.ln set filetype=lokinote
-  au! FileType lokinote so ~/.config/nvim/lua/lokinote.vim
-augroup end
 
 " auto reload changed files (work well with gs > m-r)
 au! FocusGained,BufEnter * checktime

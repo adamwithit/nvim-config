@@ -10,6 +10,7 @@ How to use this repo
   read every files, modify and experiment
 
 General key bindings (applied to both vim and tmux)
+  Ctrl-j / k     = indent / outdent highlighted lines (vim visual mode only)
   Ctrl-j         = accept / confirm / open (similar to <cr>)
   Alt-j / k      = move in finder (nvim-cmp, telescope, and fzf)
   Alt-H / L      = move in tmux windows
@@ -20,16 +21,27 @@ General key bindings (applied to both vim and tmux)
   Ctrl-c         = cancel / exit in zsh, vim, and tmux
 
 Environment
-  neovim 0.7
-    download nvim.appimage from https://github.com/neovim/neovim/releases/tag/v0.7.0
+  libssl.so is missing (ubuntu 22.04)
+    wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.17_amd64.deb
+    sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.17_amd64.deb
+    rm *.deb
+
+  nodejs 18, eslint
+    sudo apt remove nodejs libnode-dev libnode72
+    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+    sudo apt install -y nodejs
+    sudo npm install -g eslint
+
+  neovim
+    download latest nvim.appimage from https://github.com/neovim/neovim/releases
     sudo mv nvim.appimage /usr/local/bin/nvim
     sudo chmod +x /usr/local/bin/nvim
 
-  pynvim for auto-install lua packages within nvim
-    although nvim 0.7 uses python3, but seems packer/hererocks need python2
-    apt-get install python python3.8
-    pip install --user --upgrade pynvim
+  luarocks & pynvim
+    sudo apt-get install python3
+    sudo ln -s /usr/bin/python3 /usr/local/bin/python    # required by luarock
     pip3 install --user --upgrade pynvim
+    (in vim) <leader>ps    # to sync the packer cache
 
   build essential packages for compiling fzf-native
     ubuntu
@@ -46,14 +58,17 @@ Environment
   fzf: for project switching (tmux)
     sudo apt-get install fzf
 
-  tmux 3.2
-    sudo apt-get remove tmux
-    download and extract tmux-3.2a.tar.gz at https://github.com/tmux/tmux/releases
+  tmux
+    download and extract latest tmux-xxx.tar.gz at https://github.com/tmux/tmux/releases
+    sudo apt install libevent-dev libncurses-dev
     ./configure && make && sudo make install
 
   wezterm with ligatures support
     download and install from the deb file
       https://wezfurlong.org/wezterm/install/linux.html
+      wget https://github.com/wez/wezterm/releases/download/20220905-102802-7d4b8249/wezterm-20220905-102802-7d4b8249.Ubuntu20.04.deb
+      sudo dpkg -i wezterm-20220905-102802-7d4b8249.Ubuntu20.04.deb
+      rm wezterm-20220905-102802-7d4b8249.Ubuntu20.04.deb
 
   terminal font with ligatures support
     https://github.com/belluzj/fantasque-sans/releases/latest
@@ -69,12 +84,6 @@ Environment
 Optional for various LSP servers
   disable gnome animation
     gsettings set org.gnome.desktop.interface enable-animations false
-
-  nodejs 16 & eslint
-    sudo apt update
-    curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
-    sudo apt install -y nodejs
-    sudo npm install -g eslint
 
   rust
     curl --tlsv1.2 -sSf https://sh.rustup.rs | sh

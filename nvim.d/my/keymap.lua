@@ -2,7 +2,7 @@ local opts = { noremap = true, silent = true }
 -- local term_opts = { silent = true }
 local map = vim.keymap.set
 local cancel = function(tbl, keys)
-  for i, k in pairs(keys) do
+  for _, k in pairs(keys) do
     map(tbl, k, "<nop>", opts)
   end
 end
@@ -52,9 +52,16 @@ map("n", "<c-f>", "<cmd>Telescope grep_string<cr>", opts)
 map("n", "sf", "gcc", {})
 map("n", "<c-t>", "<cmd>NvimTreeToggle<cr>", opts)
 map("n", "<leader>t", "<cmd>TSPlaygroundToggle<cr>", opts)
+map("n", "<leader>hg", '<cmd>echo synIDattr(synID(line("."),col("."),1),"name")<cr>', opts)
+map("n", "<leader>tl", '<cmd>lua toggle_lsp()<cr>', opts)
+map("n", "c*", '*Ncgn', opts)        -- c* to edit word under cursor, repeatable by the dot key
+map("n", "d*", '*Ndgn', opts)
+map("n", "c.", '<cmd>let @/=@"<cr>/<cr>cgn<c-r>.<esc>', opts)       -- c. to make the last edit repeatable by dot
+map("n", "d.", '<cmd>let @/=@"<cr>/<cr>dgn<c-r>.<esc>', opts)
+map("n", "<leader>u", function()
+  require("luasnip.loaders.from_snipmate").edit_snippet_files()
+end, opts)
 -- cancel("n", {">>", "<<", ":", "/", "?", "Q", "qq", "<bs>", "<del>", "<cr>", "<up>", "<down>", "<left>", "<right>"})
--- map("n", "<C-h>", "<C-w>h", opts)    -- switch window
--- map("n", "<C-l>", "<C-w>l", opts)
 
 -- Insert
 map("i", "jk", "<esc>", opts)
@@ -72,7 +79,7 @@ map("x", "s", send.send_highlighted_lines, opts)
 map("x", "sf", "<Plug>(comment_toggle_linewise_visual)", opts)
 map("x", "<c-f>", function()
   vim.cmd([[normal "ay]])
-  vim.cmd("Telescope live_grep default_text=" .. vim.fn.getreg("a"))
+  vim.cmd("Telescope live_grep default_text=" .. vim.fn.getreg("a"):gsub(" ", "\\ "))
 end)
 cancel("x", {">", "<", "<esc>", ":"})
 

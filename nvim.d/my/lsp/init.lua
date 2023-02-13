@@ -10,6 +10,8 @@ if not ok3 then return end
 local ok4, null_ls = pcall(require, "null-ls")
 if not ok4 then return end
 
+--[[ tail -f  ~/.local/state/nvim/lsp.log ]]
+
 local on_attach = function(client, bufnr)
   local opts = { noremap = true, silent = true }
   local map = vim.api.nvim_buf_set_keymap
@@ -20,8 +22,6 @@ local on_attach = function(client, bufnr)
   map(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
   map(bufnr, "n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 end
-
---[[ local capabilities = vim.lsp.protocol.make_client_capabilities() ]]
 
 lsp_installer.on_server_ready(function(server)
   local opts = {
@@ -172,3 +172,5 @@ null_ls.setup {
     diagnostics.flake8,
   },
 }
+
+require("flutter-tools").setup{} -- use defaults
