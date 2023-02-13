@@ -60,7 +60,6 @@ packer.startup(function(use, use_rocks)
   use "triglav/vim-visual-increment"    -- increase numbers on multiple lines at once
   use "tomtom/tlib_vim"                 -- provided string#Strip, used in the lokinote bullet style switching shortcut
   use "rcarriga/nvim-notify"
-  use "akinsho/toggleterm.nvim"
 
   -- which key
   use "folke/which-key.nvim"
@@ -102,7 +101,14 @@ packer.startup(function(use, use_rocks)
   use 'nvim-telescope/telescope-media-files.nvim'
 
   -- Treesitter
-  use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
+  --
+  use {
+        'nvim-treesitter/nvim-treesitter',
+        run = function()
+            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+            ts_update()
+        end,
+    }
   use "nvim-treesitter/playground"
   use 'JoosepAlviste/nvim-ts-context-commentstring'
 
@@ -110,8 +116,12 @@ packer.startup(function(use, use_rocks)
   use "lewis6991/gitsigns.nvim"
 
   -- Explorer
-  use 'kyazdani42/nvim-web-devicons'
-  use 'kyazdani42/nvim-tree.lua'
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    }
+  }
 
   -- Tabline / Statusline
   use "ojroques/nvim-hardline"
@@ -152,6 +162,11 @@ packer.startup(function(use, use_rocks)
   -- noremap <Leader>t{ :Tabularize /{<cr>
   -- noremap <Leader>t# :Tabularize /#<cr>
   -- noremap <Leader>t> :Tabularize /=><cr>
+
+  --[[ -- flutter ]]
+  --[[ use 'natebosch/vim-lsc' ]]
+  --[[ use 'natebosch/vim-lsc-dart' ]]
+  --[[ use 'dart-lang/dart-vim-plugin' ]]
 
 
   -- Automatically set up your configuration after cloning packer.nvim

@@ -21,12 +21,12 @@ local on_attach = function(client, bufnr)
   map(bufnr, "n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+--[[ local capabilities = vim.lsp.protocol.make_client_capabilities() ]]
 
 lsp_installer.on_server_ready(function(server)
   local opts = {
     on_attach = on_attach,
-    capabilities = cmp_nvim_lsp.update_capabilities(capabilities),
+    capabilities = cmp_nvim_lsp.default_capabilities(),
   }
 
   -- refs for all LSP servers
@@ -80,6 +80,10 @@ lsp_installer.on_server_ready(function(server)
   if server.name == "rust-analyzer" then
     local rust_analyzer_opts = require("my.lsp.rust_analyzer")
     opts = vim.tbl_deep_extend("force", rust_analyzer_opts, opts)
+  end
+  if server.name == "dartls" then
+    local dartls_opts = require("my.lsp.dartls")
+    opts = vim.tbl_deep_extend("force", dartls_opts, opts)
   end
   -- This setup() function is exactly the same as lspconfig's setup function.
   -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
