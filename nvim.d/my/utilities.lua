@@ -31,7 +31,10 @@ _G.console_ctl = function(cmd, size)
     local paneId = left_pane:match("([^ ]+)") or ""
 
     local kill_pane = function()
-      run_cmd("tmux send-keys -t " .. paneId .. " c-c 2>/dev/null; tmux send-keys -t " .. paneId .. " c-d 2>/dev/null")
+      local keys = {'c-d', 'c-c', 'c-c', 'c-c'}
+      for i=1,4 do
+        run_cmd("tmux send-keys -t " .. paneId .. " " .. keys[i] .. " 2>/dev/null")
+      end
     end
     local actual_cmd = "zsh -c 'echo leftpane > /dev/null && " .. cmd .. "'"
     local subed = string.gsub(cmd, '"', '\\"')
@@ -51,6 +54,12 @@ end
 _G.exec_in_split = function(cmd, tmux_arg)
   local cmd2 = "echo " .. cmd .. "; " .. cmd
   local cmd3 = "tmux splitw " .. (tmux_arg or "") .. " \"zsh -c '[ -f .envrc ] && source .envrc;" .. cmd2 .. "'\""
+  run_cmd(cmd3)
+end
+
+_G.exec_in_tab = function(cmd, tmux_arg)
+  local cmd2 = "echo " .. cmd .. "; " .. cmd
+  local cmd3 = "tmux new-window " .. (tmux_arg or "") .. " \"zsh -c '[ -f .envrc ] && source .envrc;" .. cmd2 .. "'\""
   run_cmd(cmd3)
 end
 
