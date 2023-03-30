@@ -51,8 +51,10 @@ cmp.setup {
   snippet = {
     expand = function(args)
       require'luasnip'.lsp_expand(args.body)
+      require'luasnip'.filetype_extend("dart", {"flutter"})
     end,
   },
+
   mapping = cmp.mapping.preset.insert({
     -- ["<C-y>"] = cmp.config.disable,
     ["<m-k>"] = cmp.mapping.select_prev_item(),
