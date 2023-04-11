@@ -1,4 +1,18 @@
 {
+
+    "Json Model": {
+        "prefix": "jsonModel",
+        "body": [
+          "import 'package:json_annotation/json_annotation.dart';",
+          "part '${1:}.g.dart';\n",
+          "@JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)",
+          "class ${1:name} {",
+          "  ${1:name}({",
+          "  });",
+          "}"
+        ],
+        "description": "Create a json annotation model"
+    },
     "Stateless Widget": {
         "prefix": "statelessW",
         "body": [

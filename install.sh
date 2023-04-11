@@ -10,8 +10,8 @@ if pip3 list | grep pynvim | grep -vq pynvim; then
   exit 1
 fi
 
-if tmux -V | grep -vq 3.3a; then
-  echo "expected tmux 3.3a, aborting..."
+if tmux -V | grep -vq 3.2; then
+  echo "expected tmux 3.2, aborting..."
   exit 1
 fi
 
