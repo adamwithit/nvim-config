@@ -6,7 +6,6 @@ end
 local lib = require("nvim-tree.lib")
 local view = require("nvim-tree.view")
 local open_file = require('nvim-tree.actions.node.open-file')
-
 nvim_tree.setup {
   auto_reload_on_write = true,
   disable_netrw = true,
@@ -15,34 +14,7 @@ nvim_tree.setup {
   hijack_unnamed_buffer_when_opening = false,
   sort_by = "name",
   update_cwd = false,
-  view = {
-    width = 100,
-    --[[ height = 30, ]]
-    side = "left",
-    number = false,
-    relativenumber = false,
-    mappings = {
-      custom_only = false,
-      list = {
-        -- R: reload, a: add, d: del, r: rename, o/x: open/close folder
-        -- t: open in tab, q: close
-        { key = "<c-t>", action = "close" },
-        { key = "t", action = "" },
-        { key = "x", action = "close_node" },
-        { key = "qf", action = "close" },
-        -- { key = "<c-j>", action = "edit" },
-        { key = "<c-j>", action = "xxx", action_cb = function()
-          local node = lib.get_node_at_cursor()
-          if node.nodes ~= nil then
-            lib.expand_or_collapse(node)
-          else
-            open_file.fn("edit", node.absolute_path)
-            view.close()
-          end
-        end },
-      },
-    },
-  },
+  on_attach = on_attach,
   filters = {
     dotfiles = false,
     custom = {},
