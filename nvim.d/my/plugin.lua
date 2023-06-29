@@ -50,7 +50,11 @@ packer.init {
 
 -- Install your plugins here
 packer.startup(function(use, use_rocks)
-  -- if not auto-installed, install with command      :PackerRocks install f-strings
+  -- if not auto-installed, install with command
+  -- :PackerRocks install lua-cjson
+  -- :PackerRocks install f-strings
+  -- if found error in missing loader module, untar lua-5.1.tar in this repo to replace:
+  --   ~/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1
   use_rocks 'lua-cjson'
   use_rocks 'f-strings'
 
@@ -165,6 +169,16 @@ packer.startup(function(use, use_rocks)
   -- noremap <Leader>t{ :Tabularize /{<cr>
   -- noremap <Leader>t# :Tabularize /#<cr>
   -- noremap <Leader>t> :Tabularize /=><cr>
+
+  use 'subnut/nvim-ghost.nvim'
+  vim.cmd [[
+    let g:nvim_ghost_autostart = 0
+    augroup nvim_ghost_user_autocommands
+      au User txti.es setfiletype python
+      au User *github.com setfiletype markdown
+    augroup END
+  ]]
+  -- start manually with :GhostTextStart
 
   use {'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim'}
   use({
