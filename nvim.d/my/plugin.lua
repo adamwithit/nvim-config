@@ -1,87 +1,94 @@
-local fn = vim.fn
+  local fn = vim.fn
 
--- Automatically install packer
-local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-  PACKER_BOOTSTRAP = fn.system {
-    "git",
-    "clone",
-    "--depth",
-    "1",
-    "https://github.com/wbthomason/packer.nvim",
-    install_path,
+  -- Automatically install packer
+  local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+  if fn.empty(fn.glob(install_path)) > 0 then
+    PACKER_BOOTSTRAP = fn.system {
+      "git",
+      "clone",
+      "--depth",
+      "1",
+      "https://github.com/wbthomason/packer.nvim",
+      install_path,
+    }
+    print "Installing packer close and reopen Neovim..."
+    vim.cmd [[packadd packer.nvim]]
+  end
+
+  -- Use a protected call so we don't error out on first use
+  local status_ok, packer = pcall(require, "packer")
+  if not status_ok then
+    return
+  end
+
+  local ok2, packer_luarocks = pcall(require, "packer.luarocks")
+  if not ok2 then
+    return
+  end
+  packer_luarocks.install_commands()
+
+  -- Have packer use a popup window
+  packer.init {
+    display = {
+      open_fn = function()
+        return require("packer.util").float { border = "rounded" }
+      end,
+    },
   }
-  print "Installing packer close and reopen Neovim..."
-  vim.cmd [[packadd packer.nvim]]
-end
 
--- Use a protected call so we don't error out on first use
-local status_ok, packer = pcall(require, "packer")
-if not status_ok then
-  return
-end
+  -- " vim features that extracted out as a separate file, but not grouped as a
+  -- " plugin yet
+  -- function! SourceWhenExist(filepath)
+  --   if !empty(glob(a:filepath))
+  --     exec "so " . a:filepath
+  --   endif
+  -- endfunction
+  -- can probably be replaced with lsp
+  -- call SourceWhenExist("/home/loki/loki/env/vim-misc/plugin/html.vim")
+  -- for refactoring ruby
+  -- call SourceWhenExist("/home/loki/loki/env/vim-misc/plugin/extract-method.vim")
+  --
 
-local ok2, packer_luarocks = pcall(require, "packer.luarocks")
-if not ok2 then
-  return
-end
-packer_luarocks.install_commands()
+  -- Install your plugins here
+  packer.startup(function(use, use_rocks)
+    -- if not auto-installed, install with command
+    -- :PackerRocks install lua-cjson
+    -- :PackerRocks install f-strings
+    -- if found error in missing loader module, untar lua-5.1.tar in this repo to replace:
+    --   ~/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1
+    use_rocks ({'lua-cjson',
+      env = {
+        ICU_ROOT = "/usr/local/opt/icu4c",
+        LUA_LIBDIR = "/usr/local/opt/lua@5.1/lib/",
+        LUA_LIBDIR_FILE = "liblua5.1.dylib",
+      },
+    })
+    use_rocks 'f-strings'
 
--- Have packer use a popup window
-packer.init {
-  display = {
-    open_fn = function()
-      return require("packer.util").float { border = "rounded" }
-    end,
-  },
-}
+    use "wbthomason/packer.nvim"          -- Have packer manage itself
+    use "nvim-lua/popup.nvim"             -- An implementation of the Popup API from vim in Neovim
+    use "nvim-lua/plenary.nvim"           -- Useful lua functions used ny lots of plugins
+    use 'antoinemadec/FixCursorHold.nvim'
+    use "tpope/vim-repeat"
+    use "triglav/vim-visual-increment"    -- increase numbers on multiple lines at once
+    use "tomtom/tlib_vim"                 -- provided string#Strip, used in the lokinote bullet style switching shortcut
+    use "rcarriga/nvim-notify"
 
--- " vim features that extracted out as a separate file, but not grouped as a
--- " plugin yet
--- function! SourceWhenExist(filepath)
---   if !empty(glob(a:filepath))
---     exec "so " . a:filepath
---   endif
--- endfunction
--- can probably be replaced with lsp
--- call SourceWhenExist("/home/loki/loki/env/vim-misc/plugin/html.vim")
--- for refactoring ruby
--- call SourceWhenExist("/home/loki/loki/env/vim-misc/plugin/extract-method.vim")
+    -- which key
+    use "folke/which-key.nvim"
 
--- Install your plugins here
-packer.startup(function(use, use_rocks)
-  -- if not auto-installed, install with command
-  -- :PackerRocks install lua-cjson
-  -- :PackerRocks install f-strings
-  -- if found error in missing loader module, untar lua-5.1.tar in this repo to replace:
-  --   ~/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1
-  use_rocks 'lua-cjson'
-  use_rocks 'f-strings'
+    -- Colorscheme
+    use 'Mofiqul/vscode.nvim'
+    use 'kvrohit/substrata.nvim'
+    use 'marko-cerovac/material.nvim'
+    use 'norcalli/nvim-colorizer.lua'
 
-  use "wbthomason/packer.nvim"          -- Have packer manage itself
-  use "nvim-lua/popup.nvim"             -- An implementation of the Popup API from vim in Neovim
-  use "nvim-lua/plenary.nvim"           -- Useful lua functions used ny lots of plugins
-  use 'antoinemadec/FixCursorHold.nvim'
-  use "tpope/vim-repeat"
-  use "triglav/vim-visual-increment"    -- increase numbers on multiple lines at once
-  use "tomtom/tlib_vim"                 -- provided string#Strip, used in the lokinote bullet style switching shortcut
-  use "rcarriga/nvim-notify"
-
-  -- which key
-  use "folke/which-key.nvim"
-
-  -- Colorscheme
-  use 'Mofiqul/vscode.nvim'
-  use 'kvrohit/substrata.nvim'
-  use 'marko-cerovac/material.nvim'
-  use 'norcalli/nvim-colorizer.lua'
-
-  use {'yamatsum/nvim-cursorline', config = function()
-    vim.g.cursorword_highlight = false
-    vim.cmd [[hi CursorWord guibg=#444444]]
-  end}
-  use 'lukas-reineke/indent-blankline.nvim'
-  use 'Xuyuanp/scrollbar.nvim'
+    use {'yamatsum/nvim-cursorline', config = function()
+      vim.g.cursorword_highlight = false
+      vim.cmd [[hi CursorWord guibg=#444444]]
+    end}
+    use 'lukas-reineke/indent-blankline.nvim'
+    use 'Xuyuanp/scrollbar.nvim'
 
   -- Completion
   use "L3MON4D3/LuaSnip"

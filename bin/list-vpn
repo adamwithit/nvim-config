@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# set -x
+
+vpn-connection list | tail -n +2 | awk -F '"' '{print $2}'
