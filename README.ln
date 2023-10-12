@@ -115,3 +115,6 @@ Optional for various LSP servers
       asciinema rec --overwrite test.json
       asciinema play test.json
       cat test.json | npx svg-term --out test.svg
+
+  diff-so-fancy
+    npm install -g diff-so-fancy
