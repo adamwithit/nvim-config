@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# set -x
+
+# search project.vim and .devbase/project.vim from $HOME
+# ask with fzf, open or focus the picked project
+
+# Prerequisite
+# tmux 3.2+
+# fdfind & fzf
+#     sudo apt-get install fdfind fzf
+
+# move up/down:  m-k / m-j
+# accept:        c-j
+
+input="$1"
+
+vpns="$(list-vpn)"
+
+if [[ "$input" = "" ]]; then
+  picked="$(echo "$vpns" | sort -r | fzf-tmux-popup -p -w 50 -h 50% -m)"
+
+  if [[ "$picked" = "" ]]; then
+    exit 0
+  fi
+else
+  picked="$(echo "$vpns" | grep "$input")"
+fi
+
+vpnName=$picked
+
+vpn-connection connect "$vpnName"

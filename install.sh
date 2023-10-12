@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if nvim --version | head -n1 | grep -vq 0.10; then
+if nvim --version | head -n1 | grep -vq 0.9; then
   echo "expected nvim 0.10, aborting..."
   exit 1
 fi
@@ -10,7 +10,7 @@ if pip3 list | grep pynvim | grep -vq pynvim; then
   exit 1
 fi
 
-if tmux -V | grep -vq 3.2; then
+if tmux -V | grep -vq 3.3a; then
   echo "expected tmux 3.2, aborting..."
   exit 1
 fi
