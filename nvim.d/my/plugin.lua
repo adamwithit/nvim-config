@@ -87,7 +87,8 @@
       vim.g.cursorword_highlight = false
       vim.cmd [[hi CursorWord guibg=#444444]]
     end}
-    use 'lukas-reineke/indent-blankline.nvim'
+    -- use 'lukas-reineke/indent-blankline.nvim'
+    use {'lukas-reineke/indent-blankline.nvim', main = "ibl", opts = {}}
     use 'Xuyuanp/scrollbar.nvim'
 
   -- Completion
