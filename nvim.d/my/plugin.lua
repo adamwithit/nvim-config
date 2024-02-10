@@ -110,7 +110,7 @@
 
   -- Telescope
   -- download and install ripgrep deb from https://github.com/BurntSushi/ripgrep/releases
-  use "nvim-telescope/telescope.nvim"
+  -- use "nvim-telescope/telescope.nvim"
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
   use 'nvim-telescope/telescope-media-files.nvim'
 
@@ -195,7 +195,6 @@
     ft = { "markdown" },
   })
 
-  use "github/copilot.vim"
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
