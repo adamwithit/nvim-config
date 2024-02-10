@@ -30,7 +30,7 @@ o.completeopt = { "menu", "preview", "menuone" } -- mostly just for cmp
 -- "change the autocomplete style
 o.wildmenu = true
 -- o.wildmode = list:longest,full
-o.lazyredraw = true                  -- for complex macro playback
+-- o.lazyredraw = true                  -- for complex macro playback
 o.iskeyword:append "-"
 
 o.autoread = true

@@ -2,20 +2,23 @@ local status_ok, configs = pcall(require, "nvim-treesitter.configs")
 if not status_ok then
   return
 end
+require('nvim-treesitter.install').prefer_git = true
 
 -- now postresql is still under development
 -- when ready, we can edit the below file to support embedded sql in javascript
 -- vi ~/.local/share/nvim/site/pack/packer/start/nvim-treesitter/queries/ecma/injections.scm
 
 configs.setup {
-  ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  prefer_git = true,
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
-  ignore_install = { "" }, -- List of parsers to ignore installing
+  ignore_install = { "dart" }, -- List of parsers to ignore installing
   highlight = {
     enable = true, -- false will disable the whole extension
     disable = { "" }, -- list of language that will be disabled
     additional_vim_regex_highlighting = true,
   },
+  ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  -- ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
   indent = { enable = true, disable = { "javascript" } },   -- turn off for js because it can't auto indent embedded sql
   playground = {
     enable = true,

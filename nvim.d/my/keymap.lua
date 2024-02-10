@@ -62,9 +62,6 @@ map("n", "d.", '<cmd>let @/=@"<cr>/<cr>dgn<c-r>.<esc>', opts)
 map("n", "<leader>u", function()
   require("luasnip.loaders.from_snipmate").edit_snippet_files()
 end, opts)
-vim.cmd [[let g:copilot_no_tab_map = v:true]]
-
-map("i", "<m-m>", "copilot#Accept('<CR>')", {noremap = true, silent = true, expr=true, replace_keycodes = false })
 -- cancel("n", {">>", "<<", ":", "/", "?", "Q", "qq", "<bs>", "<del>", "<cr>", "<up>", "<down>", "<left>", "<right>"})
 
 -- Insert

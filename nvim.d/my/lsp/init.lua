@@ -171,4 +171,3 @@ null_ls.setup {
   },
 }
 
-require("flutter-tools").setup{} -- use defaults
