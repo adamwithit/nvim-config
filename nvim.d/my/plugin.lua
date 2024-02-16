@@ -109,19 +109,11 @@
     use "b0o/schemastore.nvim"
     use "jose-elias-alvarez/null-ls.nvim"
 
-<<<<<<< HEAD
   -- Telescope
   -- download and install ripgrep deb from https://github.com/BurntSushi/ripgrep/releases
   -- use "nvim-telescope/telescope.nvim"
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
   use 'nvim-telescope/telescope-media-files.nvim'
-=======
-    -- Telescope
-    -- download and install ripgrep deb from https://github.com/BurntSushi/ripgrep/releases
-    use "nvim-telescope/telescope.nvim"
-    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
-    use 'nvim-telescope/telescope-media-files.nvim'
->>>>>>> a85750bb378e99255cf80cccd4d71ab93af0602b
 
     -- Treesitter
     --
