@@ -45,9 +45,11 @@ local kind_icons = {
   TypeParameter = "",
 }
 
-local ls = require('luasnip')
-ls.config.set_config({
+luasnip.config.set_config({
   store_selection_keys = '<tab>',
+	update_events = "TextChanged,TextChangedI",
+  region_check_events = "CursorMoved",
+	delete_check_events = "TextChanged",
 })
 
 cmp.setup {
