@@ -208,8 +208,6 @@
         }
     })
 
-    use "github/copilot.vim"
-
   -- Explorer
   use {
     'nvim-tree/nvim-tree.lua',
