@@ -3,6 +3,8 @@
 -- https://www.youtube.com/watch?v=OhnLevLpGB4&list=PLhoH5vyxr6Qq41NFL4GvhFp-WLd5xzIzZ
 -- https://github.com/LunarVim/Neovim-from-scratch
 
+vim.cmd "source ~/.config/nvim/lua/autocmd.vim"
+vim.cmd "source ~/.config/nvim/lua/tmux.vim"
 require "my.option"
 require "my.utilities"
 require "my.colorscheme"
@@ -18,6 +20,4 @@ require "my.explorer"
 require "my.statusline"
 require "my.tabline"
 require "my.toggleterm"
-vim.cmd "source ~/.config/nvim/lua/autocmd.vim"
-vim.cmd "source ~/.config/nvim/lua/tmux.vim"
 require "my.whichkey"
