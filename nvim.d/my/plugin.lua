@@ -111,7 +111,11 @@
 
   -- Telescope
   -- download and install ripgrep deb from https://github.com/BurntSushi/ripgrep/releases
-  -- use "nvim-telescope/telescope.nvim"
+  use {
+    'nvim-telescope/telescope.nvim', tag = '0.1.6',
+  -- or                            , branch = '0.1.x',
+    requires = { {'nvim-lua/plenary.nvim'} }
+  }
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
   use 'nvim-telescope/telescope-media-files.nvim'
 
@@ -196,83 +200,17 @@
       setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
       ft = { "markdown" },
     })
-    use({
-      "jackMort/ChatGPT.nvim",
-        config = function()
-          require("chatgpt").setup()
-        end,
-        requires = {
-          "MunifTanjim/nui.nvim",
-          "nvim-lua/plenary.nvim",
-          "nvim-telescope/telescope.nvim"
-        }
-    })
-
-  -- Explorer
-  use {
-    'nvim-tree/nvim-tree.lua',
-    requires = {
-      'nvim-tree/nvim-web-devicons', -- optional, for file icons
-    }
-  }
-
-  -- Tabline / Statusline
-  use "ojroques/nvim-hardline"
-  -- use "romgrk/barbar.nvim"
-  use {'akinsho/bufferline.nvim', tag = "*", requires = 'kyazdani42/nvim-web-devicons'}
-
-  -- Marks
-  use "kshenoy/vim-signature"    -- m* to toggle, display in sign bar
-
-  -- Handy conversions
-  vim.cmd [[let g:VM_maps = {}]]
-  vim.cmd [[let g:VM_maps['Skip Region'] = '<C-x>']]
-  vim.cmd [[let g:VM_maps['Exit'] = '<C-c>']]
-  -- use "mg979/vim-visual-multi"
-  use "bronson/vim-trailing-whitespace"    -- try if this can be replaced by lsp auto format
-  use "numToStr/Comment.nvim"
-  use "tpope/vim-surround"   -- manage surrounding characters like (abc) -> [abc] : cs([
-  -- crs: snake_case
-  -- crm: MixedCase
-  -- crc: camelCase
-  -- cru: UPPER_CASE
-  -- cr-: dash-case
-  -- cr<space>: space case
-  -- crt: Title Case
-  use "tpope/vim-abolish"
-  use 'glts/vim-magnum'
-  use 'glts/vim-radical'    -- convert numbers in different format: gA, crd, crx, cro, crb
-  -- Tabular: create table / align mapping quickly
-  -- use 'godlygeek/tabular'
-  -- nnoremap <Leader>t= :Tabularize /^[^=]*<CR>
-  -- vnoremap <Leader>t= :Tabularize /^[^=]*<CR>
-  -- nnoremap <Leader>t: :Tabularize /^[^:]*:/l0l1l0<CR>
-  -- vnoremap <Leader>t: :Tabularize /^[^:]*:/l0l1l0<CR>
-  -- nnoremap <Leader>t, :Tabularize /,\zs<CR>
-  -- vnoremap <Leader>t, :Tabularize /,\zs<CR>
-  -- nnoremap <Leader>t<Space> :Tabularize / \zs<CR>
-  -- vnoremap <Leader>t<Space> :Tabularize / \zs<CR>
-  -- noremap <Leader>t{ :Tabularize /{<cr>
-  -- noremap <Leader>t# :Tabularize /#<cr>
-  -- noremap <Leader>t> :Tabularize /=><cr>
-
-  use 'subnut/nvim-ghost.nvim'
-  vim.cmd [[
-    let g:nvim_ghost_autostart = 0
-    augroup nvim_ghost_user_autocommands
-      au User txti.es setfiletype python
-      au User *github.com setfiletype markdown
-    augroup END
-  ]]
-  -- start manually with :GhostTextStart
-
-  use {'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim'}
-  use({
-    "iamcco/markdown-preview.nvim",
-    run = "cd app && npm install",
-    setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
-    ft = { "markdown" },
-  })
+-- Remove the `use` here if you're using folke/lazy.nvim.
+use ({
+  'Exafunction/codeium.vim',
+  config = function ()
+    -- Change '<C-g>' here to any keycode you like.
+    vim.keymap.set('i', '<C-m>', function () return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
+    vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true, silent = true })
+    vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
+    vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
+  end
+})
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
